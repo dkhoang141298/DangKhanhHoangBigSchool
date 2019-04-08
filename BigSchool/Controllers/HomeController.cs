@@ -20,30 +20,16 @@ namespace BigSchool.Controllers
         public ActionResult Index()
         {
             var upcommingCourses = _dbContext.Courses
-                .Where(c => c.DateTime > DateTime.Now)
                 .Include(c => c.Lecturer)
                 .Include(c => c.Category)
-                ;
-            var viewModel = new CourseViewModel
+                .Where(c => c.DateTime > DateTime.Now);
+
+            var viewModel = new CoursesViewModel
             {
                 UpcommingCourses = upcommingCourses,
-            ShowAction = User.Identity.IsAuthenticated
+                ShowAction = User.Identity.IsAuthenticated
             };
             return View(viewModel);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
