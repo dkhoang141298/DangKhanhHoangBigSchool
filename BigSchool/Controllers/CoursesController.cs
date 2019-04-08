@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace BigSchool.Controllers
 {
     public class CoursesController : Controller
-    {
+    {        
         private readonly ApplicationDbContext _dbContext;
         public CoursesController()
         {
@@ -44,14 +44,14 @@ namespace BigSchool.Controllers
                 ShowAction = User.Identity.IsAuthenticated
             };
             return View(viewModel);
-        }
-
+         }
+       
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
@@ -62,7 +62,7 @@ namespace BigSchool.Controllers
                 DateTime = viewModel.GetDateTime(),
                 CategoryId = viewModel.Category,
                 Place = viewModel.Place
-
+               
             };
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
@@ -76,7 +76,7 @@ namespace BigSchool.Controllers
                 .Include(l => l.Lecturer)
                 .Include(c => c.Category)
                 .ToList();
-
+            
             return View(courses);
         }
 

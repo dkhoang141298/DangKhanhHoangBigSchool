@@ -22,18 +22,18 @@
                     {
                         <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>
                     }
-
+                
                 </span>
-                <span class="category">
-                    @course.Category.Name
-                </span>
-                @if (Model.ShowAction)
-                {
-                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
-                }
-
-            </div>
-        </li>
+            <span class="category">
+                @course.Category.Name
+            </span>
+            @if (Model.ShowAction)
+            {
+                <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+            }
+                
+        </div>
+       </li>
     }
 
 </ul>

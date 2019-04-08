@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BigSchool.ViewModels
 {
-    public class FutureDate : ValidationAttribute
+    public class FutureDate: ValidationAttribute
     {
         public override bool IsValid(object value)
         {
