@@ -1,4 +1,6 @@
 ﻿@model BigSchool.ViewModels.CoursesViewModel
+@using BigSchool.Models
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Home Page";
 }
@@ -29,7 +31,19 @@
             </span>
             @if (Model.ShowAction)
             {
-                <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                var User_Id = User.Identity.GetUserId();
+                ApplicationDbContext _dbContext = new ApplicationDbContext();
+                bool isGoing = _dbContext.Attendances.Any(a => a.CourseId == course.Id && a.AttendeeId == User_Id);
+                <div>
+                    @if(!isGoing)
+                    { 
+                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Đã tham gia</span>
+                    }
+                </div>
             }
                 
         </div>
@@ -41,7 +55,7 @@
 {
     <script>
         $(document).ready(function () {
-            $("js-toggle-attendance").click(function (e) {
+            $(".js-toggle-attendance").click(function (e) {
                 var button = $(e.target);
                 $.post("/api/attendances", { courseId: button.attr("data-course-id") })
                     .done(function () {
